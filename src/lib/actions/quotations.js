@@ -57,8 +57,8 @@ export async function updateQuotation(id, formData) {
 
 export async function getQuotations(searchParams = {}) {
   try {
-    // Ensure searchParams is awaited if it's a promise
-    const resolvedParams = await searchParams
+    // Handle searchParams properly for static generation
+    const resolvedParams = searchParams || {}
     
     // Build query parameters
     const params = new URLSearchParams()

@@ -6,6 +6,9 @@ import { QuotationsFilters } from "@/components/quotations/quotations-filters"
 import { QuotationsPaginationWrapper } from "@/components/quotations/quotations-pagination-wrapper"
 import { QuotationsLoading } from "@/components/quotations/quotations-loading"
 
+// Force dynamic rendering for searchParams
+export const dynamic = 'force-dynamic'
+
 // This makes the page a server component that can access searchParams
 export default function QuotationsPage({ searchParams }) {
   return (
