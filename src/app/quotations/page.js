@@ -7,7 +7,7 @@ import { QuotationsPaginationWrapper } from "@/components/quotations/quotations-
 import { QuotationsLoading } from "@/components/quotations/quotations-loading"
 
 // This makes the page a server component that can access searchParams
-export default async function QuotationsPage({ searchParams }) {
+export default function QuotationsPage({ searchParams }) {
   return (
     <MainLayout>
       <div className="space-y-6">
