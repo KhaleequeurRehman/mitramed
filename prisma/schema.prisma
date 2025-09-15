@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type Address {
+  street  String
+  city    String
+  state   String
+  postal  String
+  country String
+}
+
+type Item {
+  name        String
+  sku         String?
+  description String?
+  category    String?
+  uom         String
+  quantity    Int
+  unit        String?
+  costPrice   Float
+  sellingPrice Float
+  total       Float
+}
+
+type CustomerInfo {
+  name          String
+  contactPerson String?
+  email         String
+  phone         String
+  whatsapp      String?
+  wechat        String?
+  street        String
+  city          String
+  state         String
+  postal        String
+  country       String
+}
+
+type VendorInfo {
+  name          String
+  contactPerson String?
+  email         String
+  phone         String
+  whatsapp      String?
+  wechat        String?
+  street        String
+  city          String
+  state         String
+  postal        String
+  country       String
+}
+
+type ShipmentInfo {
+  address     Address
+  method      String
+  cost        Float
+  tracking    String?
+  status      SHIPMENT_STATUS
+  eta         DateTime
+  deliveredAt DateTime
+  terms       String?
+  notes       String?
+}
+
+enum QUOTATION_STATUS {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+}
+
+enum SHIPMENT_STATUS {
+  PROCESSING
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+}
+
+
+model Quotation {
+  id            String   @id @default(uuid()) @map("_id")
+  number        String?  
+  customer      CustomerInfo
+  vendor        VendorInfo
+  shipment      ShipmentInfo
+  items         Item[]
+  validUntil    DateTime?
+  paymentTerms  String?
+  advance       Float?
+  remaining     Float?
+  subtotal      Float
+  discount      Float?
+  tax           Float?
+  total         Float
+  remarks       String?
+  status        QUOTATION_STATUS @default(DRAFT)
+  created       DateTime @default(now())
+  updated       DateTime @updatedAt
+
+  @@index([number])
+  @@index([status, created])
+}
