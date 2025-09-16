@@ -6,8 +6,8 @@ import { Card, CardContent } from "@/components/ui/card"
 // This is a server component that fetches data at request time
 export async function QuotationsList({ searchParams }) {
   try {
-    // Handle searchParams properly for static generation
-    const resolvedParams = searchParams || {}
+    // Ensure searchParams is awaited if it's a promise
+    const resolvedParams = await searchParams
     
     const { quotations, total, totalPages } = await getQuotations(resolvedParams)
 

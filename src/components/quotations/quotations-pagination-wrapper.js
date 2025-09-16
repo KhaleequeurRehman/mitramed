@@ -3,8 +3,8 @@ import { QuotationsPagination } from "./quotations-pagination"
 
 export async function QuotationsPaginationWrapper({ searchParams }) {
   try {
-    // Handle searchParams properly for static generation
-    const resolvedParams = searchParams || {}
+    // Ensure searchParams is awaited if it's a promise
+    const resolvedParams = await searchParams
     
     const { totalPages } = await getQuotations(resolvedParams)
     

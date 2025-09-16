@@ -10,7 +10,7 @@ import { QuotationsLoading } from "@/components/quotations/quotations-loading"
 export const dynamic = 'force-dynamic'
 
 // This makes the page a server component that can access searchParams
-export default function QuotationsPage({ searchParams }) {
+export default async function QuotationsPage({ searchParams }) {
   return (
     <MainLayout>
       <div className="space-y-6">

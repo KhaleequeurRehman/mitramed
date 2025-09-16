@@ -5,16 +5,8 @@ import { RecentQuotations } from "@/components/dashboard/recent-quotations"
 
 async function getDashboardData() {
   try {
-    // Use internal API call for server-side rendering
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-    
-    const response = await fetch(`${baseUrl}/api/analytics`, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-      }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/analytics`, {
+      cache: 'no-store'
     })
 
     if (!response.ok) {
@@ -30,8 +22,21 @@ async function getDashboardData() {
 }
 
 export default async function DashboardPage() {
-  const data = await getDashboardData()
+  let data
+  
+  try {
+    data = await getDashboardData()
+    
+    // Check if API returned error
+    if (!data.success) {
+      throw new Error(data.message || 'Failed to fetch dashboard data')
+    }
+  } catch (error) {
+    // This will trigger error.js
+    throw error
+  }
 
+  console.log('analytics data', data)
   return (
     <MainLayout>
       <div className="space-y-6">
