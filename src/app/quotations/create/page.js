@@ -331,15 +331,17 @@ export default function CreateQuotationPage() {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
-            <Button 
-              variant="secondary" 
-              size="sm" 
-              className="w-full sm:w-auto"
-              onClick={generateDummyData}
-            >
-              <Wand2 className="h-4 w-4 mr-2" />
-              Generate Sample Data
-            </Button>
+            {process.env.NODE_ENV === 'development' && (
+              <Button 
+                variant="secondary" 
+                size="sm" 
+                className="w-full sm:w-auto"
+                onClick={generateDummyData}
+              >
+                <Wand2 className="h-4 w-4 mr-2" />
+                Generate Sample Data
+              </Button>
+            )}
           </div>
           
           {/* Title & Subtitle - Centered on Mobile */}
