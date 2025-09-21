@@ -86,10 +86,9 @@ export const contactSchema = z.object({
 
 export const itemSchema = z.object({
   name: z.string().min(1, "Product name is required"),
-  sku: z.string().optional(),
+  productNumber: z.string().optional(),
   description: z.string().optional(),
   category: z.string().optional(),
-  uom: z.string().min(1, "Unit of measure is required"),
   quantity: z.union([z.string().min(1, "Quantity is required"), z.number().min(1, "Quantity is required")])
     .refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) > 0, "Please enter a valid positive number (e.g., 5, 10.5)")
     .refine((val) => validateDecimalPlaces(val), "Maximum 2 decimal places allowed (e.g., 10.50)")
@@ -104,6 +103,7 @@ export const itemSchema = z.object({
     .refine((val) => validateDecimalPlaces(val), "Maximum 2 decimal places allowed (e.g., 49.99)")
     .transform((val) => parseFloat(val)),
   total: z.number().positive("Total must be positive").optional(),
+  vendor: contactSchema,
 });
 
 export const shipmentInfoSchema = z.object({
@@ -135,7 +135,6 @@ export const shipmentInfoSchema = z.object({
  */
 export const quotationCreateSchema = z.object({
   customer: contactSchema,
-  vendor: contactSchema,
   shipment: shipmentInfoSchema,
   items: z.array(itemSchema).min(1, "At least one item is required"),
   validUntil: z.string().optional().refine((val) => {
@@ -161,7 +160,6 @@ export const quotationCreateSchema = z.object({
  */
 export const quotationUpdateSchema = z.object({
   customer: contactSchema.partial().optional(),
-  vendor: contactSchema.partial().optional(),
   shipment: shipmentInfoSchema.partial().optional(),
   items: z.array(itemSchema).min(1, "At least one item is required").optional(),
   validUntil: z.string().optional().refine((val) => {

@@ -23,15 +23,15 @@ type Address {
 
 type Item {
   name        String
-  sku         String?
+  productNumber String?
   description String?
   category    String?
-  uom         String
   quantity    Int
   unit        String?
   costPrice   Float
   sellingPrice Float
   total       Float
+  vendor      VendorInfo
 }
 
 type CustomerInfo {
@@ -93,7 +93,6 @@ model Quotation {
   id            String   @id @default(uuid()) @map("_id")
   number        String?  
   customer      CustomerInfo
-  vendor        VendorInfo
   shipment      ShipmentInfo
   items         Item[]
   validUntil    DateTime?

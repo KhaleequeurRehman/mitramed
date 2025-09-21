@@ -27,19 +27,6 @@ export async function POST(request) {
           country: validatedData.customer.address.country
         }
     
-    const vendorData = {
-            name: validatedData.vendor.name,
-            contactPerson: validatedData.vendor.contactPerson || null,
-            email: validatedData.vendor.email,
-            phone: validatedData.vendor.phone,
-            whatsapp: validatedData.vendor.whatsapp || null,
-            wechat: validatedData.vendor.wechat || null,
-            street: validatedData.vendor.address.street,
-            city: validatedData.vendor.address.city,
-            state: validatedData.vendor.address.state,
-            postal: validatedData.vendor.address.postal,
-            country: validatedData.vendor.address.country
-    }
       
     // Prepare quotation items
     const quotationItems = validatedData.items.map(item => {
@@ -50,15 +37,27 @@ export async function POST(request) {
       
       return {
         name: item.name,
-        sku: item.sku,
+        productNumber: item.productNumber,
         description: item.description,
         category: item.category,
-        uom: item.uom,
         quantity: quantity,
         unit: item.unit,
         costPrice: costPrice,
         sellingPrice: sellingPrice,
-        total: total
+        total: total,
+        vendor: {
+          name: item.vendor.name,
+          contactPerson: item.vendor.contactPerson,
+          email: item.vendor.email,
+          phone: item.vendor.phone,
+          whatsapp: item.vendor.whatsapp,
+          wechat: item.vendor.wechat,
+          street: item.vendor.address.street,
+          city: item.vendor.address.city,
+          state: item.vendor.address.state,
+          postal: item.vendor.address.postal,
+          country: item.vendor.address.country
+        }
       }
     })
       
@@ -74,7 +73,6 @@ export async function POST(request) {
       const quotationData = {
         number: `QT-${String(quotationCount + 1).padStart(4, '0')}`,
       customer: customerData,
-      vendor: vendorData,
         shipment: {
             address: {
               street: validatedData.shipment.address.street,
@@ -211,7 +209,10 @@ export async function GET(request) {
       where,
       orderBy,
       skip,
-      take: limit
+      take: limit,
+      include: {
+        items: true
+      }
     })
     
     return NextResponse.json({

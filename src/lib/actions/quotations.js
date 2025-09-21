@@ -55,6 +55,31 @@ export async function updateQuotation(id, formData) {
 }
 
 
+export async function deleteQuotation(id) {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL
+    const apiUrl = `${baseUrl}/api/quotations/${id}`
+    
+    const response = await fetch(apiUrl, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.message || 'Failed to delete quotation')
+    }
+      
+    const result = await response.json()
+    return { success: true, data: result }
+      
+  } catch (error) {
+    return { success: false, error: error.message || "Failed to delete quotation" }
+  }
+}
+
 export async function getQuotations(searchParams = {}) {
   try {
     // Ensure searchParams is awaited if it's a promise

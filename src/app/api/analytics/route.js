@@ -80,7 +80,10 @@ export async function GET(req) {
         orderBy: {
           created: 'desc'
         },
-        take: 5
+        take: 5,
+        include: {
+          items: true
+        }
       }),
 
       // 3. Status Breakdown (All statuses for overview)
@@ -137,7 +140,6 @@ export async function GET(req) {
         id: q.id,
         number: q.number,
         customerName: q.customer?.name || 'Unknown',
-        vendorName: q.vendor?.name || 'N/A',
         total: q.total,
         status: q.status,
         created: q.created

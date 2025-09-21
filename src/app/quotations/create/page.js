@@ -27,29 +27,14 @@ export default function CreateQuotationPage() {
         name: "ABC Medical Center",
         contactPerson: "Dr. John Smith",
         email: "john.smith@abcmedical.com",
-        phone: "+1-555-0123",
-        whatsapp: "+1-555-0123",
+        phone: "+915550123",
+        whatsapp: "+915550123",
         wechat: "",
         address: {
           street: "123 Medical Street",
           city: "New York",
           state: "NY",
           postal: "10001",
-          country: "USA"
-        }
-      },
-      vendor: {
-        name: "MedSupply Solutions",
-        contactPerson: "Sarah Johnson",
-        email: "sarah@medsupply.com",
-        phone: "+1-555-0456",
-        whatsapp: "+1-555-0456",
-        wechat: "",
-        address: {
-          street: "456 Supply Avenue",
-          city: "Los Angeles",
-          state: "CA",
-          postal: "90210",
           country: "USA"
         }
       },
@@ -73,25 +58,53 @@ export default function CreateQuotationPage() {
       items: [
         {
           name: "Digital Blood Pressure Monitor",
-          sku: "BP-MON-001",
+          productNumber: "BP-MON-001",
           description: "Professional grade digital blood pressure monitor with large display",
           category: "Diagnostic Equipment",
-          uom: "Piece",
           quantity: "2",
           unit: "pcs",
           costPrice: "89.99",
-          sellingPrice: "129.99"
+          sellingPrice: "129.99",
+          vendor: {
+            name: "MedSupply Solutions",
+            contactPerson: "Sarah Johnson",
+            email: "sarah@medsupply.com",
+            phone: "+915550123",
+            whatsapp: "+915550123",
+            wechat: "",
+            address: {
+              street: "456 Supply Avenue",
+              city: "Los Angeles",
+              state: "CA",
+              postal: "90210",
+              country: "USA"
+            }
+          }
         },
         {
           name: "Digital Thermometer",
-          sku: "TEMP-001",
+          productNumber: "TEMP-001",
           description: "Infrared digital thermometer for accurate temperature readings",
           category: "Diagnostic Equipment",
-          uom: "Piece",
           quantity: "5",
           unit: "pcs",
           costPrice: "24.99",
-          sellingPrice: "39.99"
+          sellingPrice: "39.99",
+          vendor: {
+            name: "ThermoTech Inc",
+            contactPerson: "Mike Wilson",
+            email: "mike@thermotech.com",
+            phone: "+915550123",
+            whatsapp: "+915550123",
+            wechat: "",
+            address: {
+              street: "789 Tech Street",
+              city: "San Francisco",
+              state: "CA",
+              postal: "94102",
+              country: "USA"
+            }
+          }
         }
       ],
       validUntil: "2024-03-15",
@@ -199,14 +212,28 @@ export default function CreateQuotationPage() {
       items: [
         {
           name: "",
-          sku: "",
+          productNumber: "",
           description: "",
           category: "",
-          uom: "",
           quantity: "",
           unit: "",
           costPrice: "",
-          sellingPrice: ""
+          sellingPrice: "",
+          vendor: {
+            name: "",
+            contactPerson: "",
+            email: "",
+            phone: "",
+            whatsapp: "",
+            wechat: "",
+            address: {
+              street: "",
+              city: "",
+              state: "",
+              postal: "",
+              country: ""
+            }
+          }
         }
       ]
     }
@@ -240,14 +267,28 @@ export default function CreateQuotationPage() {
   const addItem = () => {
     append({
       name: "",
-      sku: "",
+      productNumber: "",
       description: "",
       category: "",
-      uom: "",
       quantity: "",
       unit: "",
       costPrice: "",
-      sellingPrice: ""
+      sellingPrice: "",
+      vendor: {
+        name: "",
+        contactPerson: "",
+        email: "",
+        phone: "",
+        whatsapp: "",
+        wechat: "",
+        address: {
+          street: "",
+          city: "",
+          state: "",
+          postal: "",
+          country: ""
+        }
+      }
     })
   }
 
@@ -290,7 +331,7 @@ export default function CreateQuotationPage() {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
-            {/* <Button 
+            <Button 
               variant="secondary" 
               size="sm" 
               className="w-full sm:w-auto"
@@ -298,7 +339,7 @@ export default function CreateQuotationPage() {
             >
               <Wand2 className="h-4 w-4 mr-2" />
               Generate Sample Data
-            </Button> */}
+            </Button>
           </div>
           
           {/* Title & Subtitle - Centered on Mobile */}
@@ -456,150 +497,6 @@ export default function CreateQuotationPage() {
             </CardContent>
           </Card>
 
-          {/* Vendor Information */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Vendor Information *</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.name">Vendor Name *</Label>
-                  <Input
-                    {...register("vendor.name")}
-                    placeholder="Vendor company name"
-                    className={hasFieldError("vendor.name") ? "border-destructive" : ""}
-                  />
-                  {hasFieldError("vendor.name") && (
-                    <p className="text-sm text-destructive">{getFieldError("vendor.name")}</p>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.contactPerson">Contact Person</Label>
-                  <Input
-                    {...register("vendor.contactPerson")}
-                    placeholder="Contact person name"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.email">Email *</Label>
-                  <Input
-                    {...register("vendor.email")}
-                    type="email"
-                    placeholder="vendor@company.com"
-                    className={hasFieldError("vendor.email") ? "border-destructive" : ""}
-                  />
-                  {hasFieldError("vendor.email") && (
-                    <p className="text-sm text-destructive">{getFieldError("vendor.email")}</p>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.phone">Phone *</Label>
-                  <Input
-                    {...register("vendor.phone")}
-                    type="tel"
-                    placeholder="Phone number"
-                    className={hasFieldError("vendor.phone") ? "border-destructive" : ""}
-                  />
-                  {hasFieldError("vendor.phone") && (
-                    <p className="text-sm text-destructive">{getFieldError("vendor.phone")}</p>
-                  )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.whatsapp">WhatsApp</Label>
-                  <Input
-                    {...register("vendor.whatsapp")}
-                    type="tel"
-                    placeholder="WhatsApp number"
-                  />
-                  {errors.vendor?.whatsapp && (
-                    <p className="text-sm text-red-600">{errors.vendor.whatsapp.message}</p>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.wechat">WeChat</Label>
-                  <Input
-                    {...register("vendor.wechat")}
-                    placeholder="WeChat ID"
-                  />
-                  {errors.vendor?.wechat && (
-                    <p className="text-sm text-red-600">{errors.vendor.wechat.message}</p>
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="vendor.address.street">Address *</Label>
-                <Input
-                  {...register("vendor.address.street")}
-                  placeholder="Street address"
-                  className={hasFieldError("vendor.address.street") ? "border-destructive" : ""}
-                />
-                {hasFieldError("vendor.address.street") && (
-                  <p className="text-sm text-destructive">{getFieldError("vendor.address.street")}</p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.address.city">City *</Label>
-                  <Input
-                    {...register("vendor.address.city")}
-                    placeholder="City"
-                    className={hasFieldError("vendor.address.city") ? "border-destructive" : ""}
-                  />
-                  {hasFieldError("vendor.address.city") && (
-                    <p className="text-sm text-destructive">{getFieldError("vendor.address.city")}</p>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.address.state">State *</Label>
-                  <Input
-                    {...register("vendor.address.state")}
-                    placeholder="State"
-                    className={hasFieldError("vendor.address.state") ? "border-destructive" : ""}
-                  />
-                  {hasFieldError("vendor.address.state") && (
-                    <p className="text-sm text-destructive">{getFieldError("vendor.address.state")}</p>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.address.postal">Postal Code *</Label>
-                  <Input
-                    {...register("vendor.address.postal")}
-                    placeholder="Postal code"
-                    className={hasFieldError("vendor.address.postal") ? "border-destructive" : ""}
-                  />
-                  {hasFieldError("vendor.address.postal") && (
-                    <p className="text-sm text-destructive">{getFieldError("vendor.address.postal")}</p>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.address.country">Country *</Label>
-                  <Input
-                    {...register("vendor.address.country")}
-                    placeholder="Country"
-                    className={hasFieldError("vendor.address.country") ? "border-destructive" : ""}
-                  />
-                  {hasFieldError("vendor.address.country") && (
-                    <p className="text-sm text-destructive">{getFieldError("vendor.address.country")}</p>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Quotation Details */}
           <Card>
@@ -871,10 +768,10 @@ export default function CreateQuotationPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label>SKU</Label>
+                      <Label>Product Number</Label>
                       <Input
-                        {...register(`items.${index}.sku`)}
-                        placeholder="SKU code"
+                        {...register(`items.${index}.productNumber`)}
+                        placeholder="Product number"
                       />
                     </div>
                     
@@ -886,17 +783,6 @@ export default function CreateQuotationPage() {
                       />
                     </div>
                     
-                    <div className="space-y-2">
-                      <Label>UOM *</Label>
-                      <Input
-                        {...register(`items.${index}.uom`)}
-                        placeholder="Unit of measure"
-                        className={hasFieldError(`items.${index}.uom`) ? "border-destructive" : ""}
-                      />
-                      {hasFieldError(`items.${index}.uom`) && (
-                        <p className="text-sm text-destructive">{getFieldError(`items.${index}.uom`)}</p>
-                      )}
-                    </div>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -964,6 +850,141 @@ export default function CreateQuotationPage() {
                       placeholder="Product description"
                       rows={2}
                     />
+                  </div>
+
+                  {/* Vendor Information for this item */}
+                  <div className="border-t pt-4">
+                    <h5 className="font-medium mb-4">Vendor Information *</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Vendor Name *</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.name`)}
+                          placeholder="Vendor company name"
+                          className={hasFieldError(`items.${index}.vendor.name`) ? "border-destructive" : ""}
+                        />
+                        {hasFieldError(`items.${index}.vendor.name`) && (
+                          <p className="text-sm text-destructive">{getFieldError(`items.${index}.vendor.name`)}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>Contact Person</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.contactPerson`)}
+                          placeholder="Contact person name"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                      <div className="space-y-2">
+                        <Label>Email *</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.email`)}
+                          type="email"
+                          placeholder="vendor@company.com"
+                          className={hasFieldError(`items.${index}.vendor.email`) ? "border-destructive" : ""}
+                        />
+                        {hasFieldError(`items.${index}.vendor.email`) && (
+                          <p className="text-sm text-destructive">{getFieldError(`items.${index}.vendor.email`)}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>Phone *</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.phone`)}
+                          type="tel"
+                          placeholder="Phone number"
+                          className={hasFieldError(`items.${index}.vendor.phone`) ? "border-destructive" : ""}
+                        />
+                        {hasFieldError(`items.${index}.vendor.phone`) && (
+                          <p className="text-sm text-destructive">{getFieldError(`items.${index}.vendor.phone`)}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                      <div className="space-y-2">
+                        <Label>WhatsApp</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.whatsapp`)}
+                          type="tel"
+                          placeholder="WhatsApp number"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>WeChat</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.wechat`)}
+                          placeholder="WeChat ID"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 mt-4">
+                      <Label>Address *</Label>
+                      <Input
+                        {...register(`items.${index}.vendor.address.street`)}
+                        placeholder="Street address"
+                        className={hasFieldError(`items.${index}.vendor.address.street`) ? "border-destructive" : ""}
+                      />
+                      {hasFieldError(`items.${index}.vendor.address.street`) && (
+                        <p className="text-sm text-destructive">{getFieldError(`items.${index}.vendor.address.street`)}</p>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+                      <div className="space-y-2">
+                        <Label>City *</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.address.city`)}
+                          placeholder="City"
+                          className={hasFieldError(`items.${index}.vendor.address.city`) ? "border-destructive" : ""}
+                        />
+                        {hasFieldError(`items.${index}.vendor.address.city`) && (
+                          <p className="text-sm text-destructive">{getFieldError(`items.${index}.vendor.address.city`)}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>State *</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.address.state`)}
+                          placeholder="State"
+                          className={hasFieldError(`items.${index}.vendor.address.state`) ? "border-destructive" : ""}
+                        />
+                        {hasFieldError(`items.${index}.vendor.address.state`) && (
+                          <p className="text-sm text-destructive">{getFieldError(`items.${index}.vendor.address.state`)}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>Postal Code *</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.address.postal`)}
+                          placeholder="Postal code"
+                          className={hasFieldError(`items.${index}.vendor.address.postal`) ? "border-destructive" : ""}
+                        />
+                        {hasFieldError(`items.${index}.vendor.address.postal`) && (
+                          <p className="text-sm text-destructive">{getFieldError(`items.${index}.vendor.address.postal`)}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>Country *</Label>
+                        <Input
+                          {...register(`items.${index}.vendor.address.country`)}
+                          placeholder="Country"
+                          className={hasFieldError(`items.${index}.vendor.address.country`) ? "border-destructive" : ""}
+                        />
+                        {hasFieldError(`items.${index}.vendor.address.country`) && (
+                          <p className="text-sm text-destructive">{getFieldError(`items.${index}.vendor.address.country`)}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}

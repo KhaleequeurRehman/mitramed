@@ -4,8 +4,9 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Printer } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { companyConfig, formatAddress, formatDate } from "@/lib/config/company"
+import { companyConfig } from "@/lib/config/company"
 import Image from "next/image"
+import { formatAddress, formatCurrency, formatDate } from "@/lib/utils"
 
 export function QuotationView({ quotationId }) {
   const [quotation, setQuotation] = useState(null)
@@ -77,16 +78,12 @@ export function QuotationView({ quotationId }) {
       <div className="proforma-invoice print-card">
         <div className="header">
           <div className="company-info">
-            {/* <h2>{companyConfig?.name}</h2>
-            <p>Innovative Healthcare Solutions</p> */}
             <Image src={"/mitramed.webp"} alt={companyConfig?.name} width={150} height={150} style={{marginTop: "-40px"}} />
           </div>
           <div className="contact-info">
             Add: {formatAddress(companyConfig?.address || "")}<br />
             Tel: {companyConfig?.contact?.phone}<br />
-            Fax: {companyConfig?.contact?.fax}<br />
             Email: {companyConfig?.contact?.email}<br />
-            Website: {companyConfig?.contact?.website}
           </div>
         </div>
 
@@ -106,8 +103,8 @@ export function QuotationView({ quotationId }) {
                   Valid Date: {quotation?.validUntil ? formatDate(quotation?.validUntil) : "30 Days"}<br />
                   Payment Term: {quotation?.paymentTerms || "Net 30"}<br />
                   Delivery By: {quotation?.shipment?.method}<br />
-                  Delivery Date: {formatDate(quotation?.shipment?.eta)}<br />
-                  Issued: {companyConfig?.issuedBy}
+                  Delivery Date: {quotation?.shipment?.eta ? formatDate(quotation.shipment.eta) : "N/A"}<br />
+                  Issued: {quotation?.created ? formatDate(quotation.created) : "N/A"}
                 </td>
               </tr>
             </tbody>
@@ -131,6 +128,7 @@ export function QuotationView({ quotationId }) {
               <th>Item</th>
               <th>P/N</th>
               <th>Description</th>
+              <th>Vendor</th>
               <th>QTY</th>
               <th>Price</th>
               <th>Total</th>
@@ -140,20 +138,22 @@ export function QuotationView({ quotationId }) {
             {quotation?.items && Array.isArray(quotation?.items) && quotation?.items.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{item?.sku || "-"}</td>
+                <td>{item?.productNumber || "N/A"}</td>
                 <td>{item?.name || 'N/A'}</td>
+                <td>{item?.vendor?.name || 'N/A'}</td>
                 <td>{item?.quantity || 'N/A'}</td>
-                <td>{item?.sellingPrice?.toFixed(2) || 'N/A'}</td>
-                <td>{item?.total?.toFixed(2) || 'N/A'}</td>
+                <td>{formatCurrency(item?.sellingPrice) || 'N/A'}</td>
+                <td>{formatCurrency(item?.total) || 'N/A'}</td>
               </tr>
             ))}
             <tr className="total-row">
               <td> </td>
               <td> </td>
-              <td><strong>TOTAL IN RMB</strong></td>
+              <td><strong>TOTAL IN PKR</strong></td>
               <td> </td>
               <td> </td>
-              <td>{quotation?.total?.toFixed(2) || 'N/A'}</td>
+              <td> </td>
+              <td>{formatCurrency(quotation?.total) || 'N/A'}</td>
             </tr>
           </tbody>
         </table>

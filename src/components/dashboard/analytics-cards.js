@@ -16,19 +16,19 @@ export function AnalyticsCards({ data = {} }) {
     },
     {
       title: "Total Value", 
-      value: `¥${financial?.totalValue || 0}`,
+      value: `${financial?.totalValue || 0}`,
       description: "Total value of accepted quotations",
       icon: <DollarSign className="h-4 w-4 text-muted-foreground" />
     },
     {
       title: "Average Value",
-      value: `¥${financial?.avgQuotationValue || '0.00'}`,
+      value: `${financial?.avgQuotationValue || '0.00'}`,
       description: "Average accepted quotation value", 
       icon: <TrendingUp className="h-4 w-4 text-muted-foreground" />
     },
     {
       title: "Pending Amount",
-      value: `¥${financial?.pendingAmount || 0}`,
+      value: `${financial?.pendingAmount || 0}`,
       description: "Amount pending collection",
       icon: <Clock className="h-4 w-4 text-muted-foreground" />
     }

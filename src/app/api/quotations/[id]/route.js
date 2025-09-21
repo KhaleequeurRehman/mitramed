@@ -95,22 +95,6 @@ export async function PUT(req, { params }) {
       };
     }
 
-    // Update vendor if provided
-    if (validatedData.vendor) {
-      updateData.vendor = {
-        name: validatedData.vendor.name || existing.vendor.name,
-        contactPerson: validatedData.vendor.contactPerson || existing.vendor.contactPerson,
-        email: validatedData.vendor.email || existing.vendor.email,
-        phone: validatedData.vendor.phone || existing.vendor.phone,
-        whatsapp: validatedData.vendor.whatsapp || existing.vendor.whatsapp,
-        wechat: validatedData.vendor.wechat || existing.vendor.wechat,
-        street: validatedData.vendor.address?.street || existing.vendor.street,
-        city: validatedData.vendor.address?.city || existing.vendor.city,
-        state: validatedData.vendor.address?.state || existing.vendor.state,
-        postal: validatedData.vendor.address?.postal || existing.vendor.postal,
-        country: validatedData.vendor.address?.country || existing.vendor.country
-      };
-    }
 
     // Update shipment if provided
     if (validatedData.shipment) {
@@ -143,15 +127,27 @@ export async function PUT(req, { params }) {
         
         return {
           name: item.name,
-          sku: item.sku,
+          productNumber: item.productNumber,
           description: item.description,
           category: item.category,
-          uom: item.uom,
           quantity: quantity,
           unit: item.unit,
           costPrice: costPrice,
           sellingPrice: sellingPrice,
-          total: total
+          total: total,
+          vendor: {
+            name: item.vendor.name,
+            contactPerson: item.vendor.contactPerson,
+            email: item.vendor.email,
+            phone: item.vendor.phone,
+            whatsapp: item.vendor.whatsapp,
+            wechat: item.vendor.wechat,
+            street: item.vendor.address.street,
+            city: item.vendor.address.city,
+            state: item.vendor.address.state,
+            postal: item.vendor.address.postal,
+            country: item.vendor.address.country
+          }
         };
       });
       updateData.items = quotationItems;

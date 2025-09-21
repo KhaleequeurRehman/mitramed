@@ -47,21 +47,6 @@ export default function EditQuotationPage({ params }) {
           country: ""
         }
       },
-      vendor: {
-        name: "",
-        contactPerson: "",
-        email: "",
-        phone: "",
-        whatsapp: "",
-        wechat: "",
-        address: {
-          street: "",
-          city: "",
-          state: "",
-          postal: "",
-          country: ""
-        }
-      },
       status: "DRAFT",
       validUntil: "",
       paymentTerms: "",
@@ -88,14 +73,28 @@ export default function EditQuotationPage({ params }) {
       items: [
         {
           name: "",
-          sku: "",
+          productNumber: "",
           description: "",
           category: "",
-          uom: "",
           quantity: "",
           unit: "",
           costPrice: "",
-          sellingPrice: ""
+          sellingPrice: "",
+          vendor: {
+            name: "",
+            contactPerson: "",
+            email: "",
+            phone: "",
+            whatsapp: "",
+            wechat: "",
+            address: {
+              street: "",
+              city: "",
+              state: "",
+              postal: "",
+              country: ""
+            }
+          }
         }
       ]
     }
@@ -139,21 +138,6 @@ export default function EditQuotationPage({ params }) {
           }
         })
         
-        setValue("vendor", {
-          name: quotationData.vendor?.name || "",
-          contactPerson: quotationData.vendor?.contactPerson || "",
-          email: quotationData.vendor?.email || "",
-          phone: quotationData.vendor?.phone || "",
-          whatsapp: quotationData.vendor?.whatsapp || "",
-          wechat: quotationData.vendor?.wechat || "",
-          address: {
-            street: quotationData.vendor?.street || "",
-            city: quotationData.vendor?.city || "",
-            state: quotationData.vendor?.state || "",
-            postal: quotationData.vendor?.postal || "",
-            country: quotationData.vendor?.country || ""
-          }
-        })
         
         setValue("status", quotationData.status || "DRAFT")
         setValue("validUntil", quotationData.validUntil ? new Date(quotationData.validUntil).toISOString().split('T')[0] : "")
@@ -184,14 +168,28 @@ export default function EditQuotationPage({ params }) {
         if (quotationData.items && quotationData.items.length > 0) {
           setValue("items", quotationData.items.map(item => ({
             name: item.name || "",
-            sku: item.sku || "",
+            productNumber: item.productNumber || "",
             description: item.description || "",
             category: item.category || "",
-            uom: item.uom || "",
             quantity: item.quantity?.toString() || "",
             unit: item.unit || "",
             costPrice: item.costPrice?.toString() || "",
-            sellingPrice: item.sellingPrice?.toString() || ""
+            sellingPrice: item.sellingPrice?.toString() || "",
+            vendor: {
+              name: item.vendor?.name || "",
+              contactPerson: item.vendor?.contactPerson || "",
+              email: item.vendor?.email || "",
+              phone: item.vendor?.phone || "",
+              whatsapp: item.vendor?.whatsapp || "",
+              wechat: item.vendor?.wechat || "",
+              address: {
+                street: item.vendor?.street || "",
+                city: item.vendor?.city || "",
+                state: item.vendor?.state || "",
+                postal: item.vendor?.postal || "",
+                country: item.vendor?.country || ""
+              }
+            }
           })))
         }
         
@@ -230,14 +228,28 @@ export default function EditQuotationPage({ params }) {
   const addItem = () => {
     append({
       name: "",
-      sku: "",
+      productNumber: "",
       description: "",
       category: "",
-      uom: "",
       quantity: "",
       unit: "",
       costPrice: "",
-      sellingPrice: ""
+      sellingPrice: "",
+      vendor: {
+        name: "",
+        contactPerson: "",
+        email: "",
+        phone: "",
+        whatsapp: "",
+        wechat: "",
+        address: {
+          street: "",
+          city: "",
+          state: "",
+          postal: "",
+          country: ""
+        }
+      }
     })
   }
 
@@ -438,136 +450,6 @@ export default function EditQuotationPage({ params }) {
             </CardContent>
           </Card>
 
-          {/* Vendor Information */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Vendor Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.name">Vendor Name *</Label>
-                  <Input
-                    id="vendor.name"
-                    {...register("vendor.name")}
-                    placeholder="Enter vendor name"
-                  />
-                  {errors.vendor?.name && (
-                    <p className="text-sm text-red-600">{errors.vendor.name.message}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.contactPerson">Contact Person</Label>
-                  <Input
-                    id="vendor.contactPerson"
-                    {...register("vendor.contactPerson")}
-                    placeholder="Enter contact person"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.email">Email *</Label>
-                  <Input
-                    id="vendor.email"
-                    type="email"
-                    {...register("vendor.email")}
-                    placeholder="Enter email"
-                    autoComplete="email"
-                  />
-                  {errors.vendor?.email && (
-                    <p className="text-sm text-red-600">{errors.vendor.email.message}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.phone">Phone *</Label>
-                  <Input
-                    id="vendor.phone"
-                    type="tel"
-                    {...register("vendor.phone")}
-                    placeholder="Enter phone number"
-                    autoComplete="tel"
-                  />
-                  {errors.vendor?.phone && (
-                    <p className="text-sm text-red-600">{errors.vendor.phone.message}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.whatsapp">WhatsApp</Label>
-                  <Input
-                    id="vendor.whatsapp"
-                    type="tel"
-                    {...register("vendor.whatsapp")}
-                    placeholder="Enter WhatsApp number"
-                    autoComplete="tel"
-                  />
-                  {errors.vendor?.whatsapp && (
-                    <p className="text-sm text-red-600">{errors.vendor.whatsapp.message}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="vendor.wechat">WeChat</Label>
-                  <Input
-                    id="vendor.wechat"
-                    {...register("vendor.wechat")}
-                    placeholder="Enter WeChat ID"
-                  />
-                  {errors.vendor?.wechat && (
-                    <p className="text-sm text-red-600">{errors.vendor.wechat.message}</p>
-                  )}
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <Label>Vendor Address</Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="space-y-1">
-                    <Input
-                      {...register("vendor.address.street")}
-                      placeholder="Street Address"
-                    />
-                    {errors.vendor?.address?.street && (
-                      <p className="text-sm text-red-600">{errors.vendor.address.street.message}</p>
-                    )}
-                  </div>
-                  <div className="space-y-1">
-                    <Input
-                      {...register("vendor.address.city")}
-                      placeholder="City"
-                    />
-                    {errors.vendor?.address?.city && (
-                      <p className="text-sm text-red-600">{errors.vendor.address.city.message}</p>
-                    )}
-                  </div>
-                  <div className="space-y-1">
-                    <Input
-                      {...register("vendor.address.state")}
-                      placeholder="State"
-                    />
-                    {errors.vendor?.address?.state && (
-                      <p className="text-sm text-red-600">{errors.vendor.address.state.message}</p>
-                    )}
-                  </div>
-                  <div className="space-y-1">
-                    <Input
-                      {...register("vendor.address.postal")}
-                      placeholder="Postal Code"
-                    />
-                    {errors.vendor?.address?.postal && (
-                      <p className="text-sm text-red-600">{errors.vendor.address.postal.message}</p>
-                    )}
-                  </div>
-                  <div className="space-y-1">
-                    <Input
-                      {...register("vendor.address.country")}
-                      placeholder="Country"
-                    />
-                    {errors.vendor?.address?.country && (
-                      <p className="text-sm text-red-600">{errors.vendor.address.country.message}</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Quotation Details */}
           <Card>
@@ -875,11 +757,11 @@ export default function EditQuotationPage({ params }) {
                       )}
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor={`items.${index}.sku`}>SKU</Label>
+                      <Label htmlFor={`items.${index}.productNumber`}>Product Number</Label>
                       <Input
-                        id={`items.${index}.sku`}
-                        {...register(`items.${index}.sku`)}
-                        placeholder="Enter SKU"
+                        id={`items.${index}.productNumber`}
+                        {...register(`items.${index}.productNumber`)}
+                        placeholder="Enter product number"
                       />
                     </div>
                     <div className="space-y-2">
@@ -889,17 +771,6 @@ export default function EditQuotationPage({ params }) {
                         {...register(`items.${index}.category`)}
                         placeholder="Enter category"
                       />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor={`items.${index}.uom`}>UOM</Label>
-                      <Input
-                        id={`items.${index}.uom`}
-                        {...register(`items.${index}.uom`)}
-                        placeholder="e.g., Piece, Box"
-                      />
-                      {errors.items?.[index]?.uom && (
-                        <p className="text-sm text-red-600">{errors.items[index].uom.message}</p>
-                      )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor={`items.${index}.quantity`}>Quantity *</Label>
@@ -961,6 +832,144 @@ export default function EditQuotationPage({ params }) {
                       placeholder="Enter item description"
                       rows={2}
                     />
+                  </div>
+
+                  {/* Vendor Information for this item */}
+                  <div className="border-t pt-4">
+                    <h5 className="font-medium mb-4">Vendor Information *</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.name`}>Vendor Name *</Label>
+                        <Input
+                          id={`items.${index}.vendor.name`}
+                          {...register(`items.${index}.vendor.name`)}
+                          placeholder="Vendor company name"
+                        />
+                        {errors.items?.[index]?.vendor?.name && (
+                          <p className="text-sm text-red-600">{errors.items[index].vendor.name.message}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.contactPerson`}>Contact Person</Label>
+                        <Input
+                          id={`items.${index}.vendor.contactPerson`}
+                          {...register(`items.${index}.vendor.contactPerson`)}
+                          placeholder="Contact person name"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.email`}>Email *</Label>
+                        <Input
+                          id={`items.${index}.vendor.email`}
+                          type="email"
+                          {...register(`items.${index}.vendor.email`)}
+                          placeholder="vendor@company.com"
+                        />
+                        {errors.items?.[index]?.vendor?.email && (
+                          <p className="text-sm text-red-600">{errors.items[index].vendor.email.message}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.phone`}>Phone *</Label>
+                        <Input
+                          id={`items.${index}.vendor.phone`}
+                          type="tel"
+                          {...register(`items.${index}.vendor.phone`)}
+                          placeholder="Phone number"
+                        />
+                        {errors.items?.[index]?.vendor?.phone && (
+                          <p className="text-sm text-red-600">{errors.items[index].vendor.phone.message}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.whatsapp`}>WhatsApp</Label>
+                        <Input
+                          id={`items.${index}.vendor.whatsapp`}
+                          type="tel"
+                          {...register(`items.${index}.vendor.whatsapp`)}
+                          placeholder="WhatsApp number"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.wechat`}>WeChat</Label>
+                        <Input
+                          id={`items.${index}.vendor.wechat`}
+                          {...register(`items.${index}.vendor.wechat`)}
+                          placeholder="WeChat ID"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 mt-4">
+                      <Label htmlFor={`items.${index}.vendor.address.street`}>Address *</Label>
+                      <Input
+                        id={`items.${index}.vendor.address.street`}
+                        {...register(`items.${index}.vendor.address.street`)}
+                        placeholder="Street address"
+                      />
+                      {errors.items?.[index]?.vendor?.address?.street && (
+                        <p className="text-sm text-red-600">{errors.items[index].vendor.address.street.message}</p>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.address.city`}>City *</Label>
+                        <Input
+                          id={`items.${index}.vendor.address.city`}
+                          {...register(`items.${index}.vendor.address.city`)}
+                          placeholder="City"
+                        />
+                        {errors.items?.[index]?.vendor?.address?.city && (
+                          <p className="text-sm text-red-600">{errors.items[index].vendor.address.city.message}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.address.state`}>State *</Label>
+                        <Input
+                          id={`items.${index}.vendor.address.state`}
+                          {...register(`items.${index}.vendor.address.state`)}
+                          placeholder="State"
+                        />
+                        {errors.items?.[index]?.vendor?.address?.state && (
+                          <p className="text-sm text-red-600">{errors.items[index].vendor.address.state.message}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.address.postal`}>Postal Code *</Label>
+                        <Input
+                          id={`items.${index}.vendor.address.postal`}
+                          {...register(`items.${index}.vendor.address.postal`)}
+                          placeholder="Postal code"
+                        />
+                        {errors.items?.[index]?.vendor?.address?.postal && (
+                          <p className="text-sm text-red-600">{errors.items[index].vendor.address.postal.message}</p>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor={`items.${index}.vendor.address.country`}>Country *</Label>
+                        <Input
+                          id={`items.${index}.vendor.address.country`}
+                          {...register(`items.${index}.vendor.address.country`)}
+                          placeholder="Country"
+                        />
+                        {errors.items?.[index]?.vendor?.address?.country && (
+                          <p className="text-sm text-red-600">{errors.items[index].vendor.address.country.message}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}

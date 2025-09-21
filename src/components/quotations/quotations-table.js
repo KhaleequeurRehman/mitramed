@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { formatCurrency, formatDate } from "@/lib/utils"
+import { formatCurrency, formatDate, getStatusColor } from "@/lib/utils"
 import { QuotationActions } from "./quotation-actions"
 
 const statusLabels = {
@@ -54,20 +54,44 @@ export function QuotationsTable({ quotations }) {
                   <TableCell className="whitespace-nowrap">
                     <div>
                       <div className="font-medium">
-                        {quotation.vendor?.name || "N/A"}
+                        {quotation.items && quotation.items.length > 0 
+                          ? quotation.items[0]?.vendor?.name || "N/A"
+                          : "N/A"
+                        }
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        {quotation.vendor?.email || "N/A"}
+                        {quotation.items && quotation.items.length > 0 
+                          ? quotation.items[0]?.vendor?.email || "N/A"
+                          : "N/A"
+                        }
                       </div>
+                      {(() => {
+                        if (!quotation.items || quotation.items.length <= 1) return null;
+                        
+                        // Get all unique vendor names
+                        const allVendors = [...new Set(quotation.items
+                          .map(item => item?.vendor?.name)
+                          .filter(name => name)
+                        )];
+                        
+                        // If there are different vendors (more than 1 unique vendor)
+                        if (allVendors.length > 1) {
+                          const otherVendors = allVendors.filter(name => name !== quotation.items[0]?.vendor?.name);
+                          return (
+                            <div className="text-xs text-muted-foreground">
+                              +{otherVendors.length} more vendor{otherVendors.length > 1 ? 's' : ''}
+                            </div>
+                          );
+                        }
+                        return null;
+                      })()}
                     </div>
                   </TableCell>
                   <TableCell className="font-medium whitespace-nowrap">
                     {formatCurrency(quotation.total)}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
-                    <Badge variant="secondary">
-                      {statusLabels[quotation.status]}
-                    </Badge>
+                    <Badge className={getStatusColor(quotation.status)}>{statusLabels[quotation.status]}</Badge>
                   </TableCell>
                   <TableCell className="text-muted-foreground whitespace-nowrap">
                     {formatDate(quotation.created)}
